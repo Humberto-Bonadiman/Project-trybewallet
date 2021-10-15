@@ -1,9 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-
+import { saveLoginData } from '../actions';
 import Input from '../components/Input';
 import Button from '../components/Button';
+
+// Esta parte eu peguei de uma thread do slack aberta pelo Michael Caxias
+// Fonte: https://trybecourse.slack.com/archives/C023YHXAEGM/p1634319081263300
+const isEmailValid = (email) => {
+  const regexEmail = /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/;
+  return regexEmail.test(email);
+};
 
 class Login extends React.Component {
   constructor() {
@@ -32,6 +39,8 @@ class Login extends React.Component {
 
   render() {
     const { email, password } = this.state;
+    const minPasswordCharacter = 6;
+    const disabled = password.length >= minPasswordCharacter && isEmailValid(email);
     return (
       <fieldset>
         <Input
@@ -55,6 +64,7 @@ class Login extends React.Component {
           type="button"
           label="Entrar"
           onClick={ this.onSubmitForm }
+          disabled={ !disabled }
         />
       </fieldset>
     );
