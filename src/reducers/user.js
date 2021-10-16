@@ -6,13 +6,16 @@ const initialState = {
   password: '',
 };
 
-const userReducer = (state = initialState, action) => {
+const user = (state = initialState, action) => {
   switch (action.type) {
   case SAVE_LOGIN_DATA:
-    return { ...state, state: action.payload };
+    return {
+      email: action.payload.email,
+      password: action.payload.password,
+    };
   default:
     return state;
   }
 };
 
-export default userReducer;
+export default user;

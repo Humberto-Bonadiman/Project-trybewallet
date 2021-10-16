@@ -82,4 +82,6 @@ const mapDispatchToProps = (dispatch) => ({
   dispatchSetValue: (value) => dispatch(saveLoginData(value)),
 });
 
+// const mapStateToProps = (state) => ({ personalInputs: state.reducer.personalInputs });
+
 export default connect(null, mapDispatchToProps)(Login);
