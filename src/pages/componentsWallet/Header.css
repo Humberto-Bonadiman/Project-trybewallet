@@ -1,0 +1,23 @@
+* {
+  margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+.header-component {
+  background-color: rgb(223, 226, 223);
+  display: flex;
+  justify-content: flex-end;
+  padding: 20px;
+}
+
+.email-header {
+  margin-right: 20px;
+}
+
+.total-expense {
+  margin-right: 5px;
+}
