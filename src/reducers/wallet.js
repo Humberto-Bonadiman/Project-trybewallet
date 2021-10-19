@@ -8,6 +8,7 @@ import {
 const initialState = {
   currencies: [],
   expenses: [],
+  allCurrencies: {},
   error: '',
 };
 
@@ -16,7 +17,11 @@ const wallet = (state = initialState, action) => {
   case RECEIVE_EXPENSES:
     return { ...state, expenses: action.payload };
   case RECEIVE_CURRENCY:
-    return { ...state, currencies: action.currency };
+    return {
+      ...state,
+      currencies: action.currency,
+      allCurrencies: action.currency,
+    };
   case FAILED_REQUEST:
     return { ...state, error: action.payload };
   default:

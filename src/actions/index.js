@@ -31,3 +31,15 @@ export function fetchCurrency() {
     }
   };
 }
+
+export function fetchExpense() {
+  return async (dispatch) => {
+    try {
+      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
+      const data = await response.json();
+      return dispatch(receiveExpenses(data));
+    } catch (error) {
+      dispatch(failedRequest(error));
+    }
+  };
+}
