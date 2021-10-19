@@ -1,24 +1,33 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { fetchCurrency } from '../../actions/index';
 
 // import Input from '../../components/Input';
 import Select from '../../components/Select';
+import './ExpenseForm.css';
 
 const methodPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
 const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+// const API = 'https://economia.awesomeapi.com.br/json/all';
 class ExpenseForm extends Component {
   constructor() {
     super();
     this.state = {
       valor: '',
       description: '',
-      currency: '',
+      coins: 'USDT',
       paymentMethod: methodPayment[0],
       tag: tags[0],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
+  }
+
+  componentDidMount() {
+    const { currencyFetch } = this.props;
+    return currencyFetch();
   }
 
   handleChange({ target }) {
@@ -50,9 +59,11 @@ class ExpenseForm extends Component {
   }
 
   render() {
-    const { valor, description, currency } = this.state;
+    const { valor, description, coins } = this.state;
+    const { currencies } = this.props;
+    const withoutUSDT = currencies.filter((currency) => currency !== 'USDT');
     return (
-      <form>
+      <form className="expenseForm">
         <label htmlFor="valor">
           Valor
           <input
@@ -75,8 +86,11 @@ class ExpenseForm extends Component {
         </label>
         <label htmlFor="currency">
           Moeda
-          <select name={ currency } id="currency">
-            <option value="primeiro">primeiro</option>
+          <select name={ coins } id="currency">
+            { withoutUSDT.map((coin) => (
+              <option key={ coin } value={ coin }>
+                { coin }
+              </option>))}
           </select>
         </label>
         { this.handleSelect() }
@@ -85,4 +99,17 @@ class ExpenseForm extends Component {
   }
 }
 
-export default ExpenseForm;
+ExpenseForm.propTypes = {
+  currencies: PropTypes.arrayOf().isRequired,
+  currencyFetch: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  currencies: state.wallet.currencies,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  currencyFetch: () => dispatch(fetchCurrency()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseForm);

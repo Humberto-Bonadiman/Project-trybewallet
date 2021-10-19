@@ -1,0 +1,18 @@
+* {
+  border: 0;
+  font-size: 100%;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+}
+
+.expenseForm {
+  background-color: rgb(99, 180, 99);
+  display: flex;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+input, select {
+  margin-left: 10px;
+}

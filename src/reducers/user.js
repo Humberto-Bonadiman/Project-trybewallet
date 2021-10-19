@@ -3,16 +3,12 @@ import { SAVE_LOGIN_DATA } from '../actions/index';
 
 const initialState = {
   email: '',
-  password: '',
 };
 
 const user = (state = initialState, action) => {
   switch (action.type) {
   case SAVE_LOGIN_DATA:
-    return {
-      email: action.payload.email,
-      password: action.payload.password,
-    };
+    return { ...state, email: action.payload.email };
   default:
     return state;
   }
