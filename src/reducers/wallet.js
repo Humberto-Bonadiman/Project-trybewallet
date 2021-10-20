@@ -15,11 +15,14 @@ const initialState = {
 const wallet = (state = initialState, action) => {
   switch (action.type) {
   case RECEIVE_EXPENSES:
-    return { ...state, expenses: action.payload };
+    return {
+      ...state,
+      expenses: [...state.expenses, action.payload],
+    };
   case RECEIVE_CURRENCY:
     return {
       ...state,
-      currencies: action.currency,
+      currencies: Object.keys(action.currency),
       allCurrencies: action.currency,
     };
   case FAILED_REQUEST:

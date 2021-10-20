@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { fetchCurrency, receiveExpenses, fetchExpense } from '../../actions/index';
+import { fetchCurrency, receiveExpenses } from '../../actions/index';
 
 // import Input from '../../components/Input';
 import Select from '../../components/Select';
@@ -9,42 +9,47 @@ import Button from '../../components/Button';
 import './ExpenseForm.css';
 
 const methodPayment = ['Dinheiro', 'Cartão de crédito', 'Cartão de débito'];
-const tags = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
+const categories = ['Alimentação', 'Lazer', 'Trabalho', 'Transporte', 'Saúde'];
 class ExpenseForm extends Component {
   constructor() {
     super();
     this.state = {
       id: 0,
-      valor: '',
+      value: '',
       description: '',
-      coins: 'USD',
-      paymentMethod: methodPayment[0],
-      tag: tags[0],
+      currency: 'USD',
+      method: methodPayment[0],
+      tag: categories[0],
     };
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSelect = this.handleSelect.bind(this);
     this.onClickSubmit = this.onClickSubmit.bind(this);
+    this.inicialState = this.inicialState.bind(this);
   }
 
   componentDidMount() {
-    const { currencyFetch, expenseFetch } = this.props;
-    return currencyFetch() && expenseFetch();
+    const { currencyFetch } = this.props;
+    return currencyFetch();
   }
 
   // Nesta parte eu consultei o repositório do Luiz Gustavo
   // Fonte: https://github.com/tryber/sd-014-b-project-trybewallet/pull/32/commits/1177635a8cbc401cf6c30ae794a2106271a3fb09
   onClickSubmit() {
-    const { saveWalletExpenses, expenseFetch, expenses } = this.props;
-    expenseFetch();
-    saveWalletExpenses({ ...this.state, exchangeRates: expenses });
+    const { saveWalletExpenses, allCurrencies, currencyFetch } = this.props;
+    currencyFetch();
+    saveWalletExpenses({ ...this.state, exchangeRates: allCurrencies });
+    this.inicialState();
+  }
+
+  inicialState() {
     this.setState((prevState) => ({
       id: prevState.id + 1,
-      valor: '',
+      value: '',
       description: '',
-      coins: 'USD',
-      paymentMethod: methodPayment[0],
-      tag: tags[0],
+      currency: 'USD',
+      method: methodPayment[0],
+      tag: categories[0],
     }));
   }
 
@@ -56,19 +61,28 @@ class ExpenseForm extends Component {
   }
 
   handleSelect() {
-    const { paymentMethod, tag } = this.state;
+    const { currency, method, tag } = this.state;
+    const { currencies } = this.props;
     return (
       <>
         <Select
+          label="Moeda"
+          options={ currencies.filter((coin) => coin !== 'USDT') }
+          name="currency"
+          onChange={ this.handleChange }
+          value={ currency }
+        />
+        <Select
           label="Método de pagamento"
           options={ methodPayment }
-          name="paymentMethod"
+          name="method"
           onChange={ this.handleChange }
-          value={ paymentMethod }
+          value={ method }
         />
         <Select
           label="Tag"
-          options={ tags }
+          options={ categories }
+          name="tag"
           onChange={ this.handleChange }
           value={ tag }
         />
@@ -77,18 +91,16 @@ class ExpenseForm extends Component {
   }
 
   render() {
-    const { valor, description, coins } = this.state;
-    const { currencies } = this.props;
-    const withoutUSDT = currencies.filter((currency) => currency !== 'USDT');
+    const { value, description } = this.state;
     return (
       <form className="expenseForm">
-        <label htmlFor="valor">
+        <label htmlFor="value">
           Valor
           <input
-            id="valor"
+            id="value"
             type="number"
-            name="valor"
-            value={ valor }
+            name="value"
+            value={ value }
             onChange={ this.handleChange }
           />
         </label>
@@ -101,15 +113,6 @@ class ExpenseForm extends Component {
             value={ description }
             onChange={ this.handleChange }
           />
-        </label>
-        <label htmlFor="currency">
-          Moeda
-          <select name={ coins } id="currency">
-            { withoutUSDT.map((coin) => (
-              <option key={ coin } value={ coin }>
-                { coin }
-              </option>))}
-          </select>
         </label>
         { this.handleSelect() }
         <Button
@@ -126,18 +129,18 @@ ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf().isRequired,
   currencyFetch: PropTypes.func.isRequired,
   saveWalletExpenses: PropTypes.func.isRequired,
-  expenseFetch: PropTypes.func.isRequired,
-  expenses: PropTypes.objectOf(PropTypes.object).isRequired,
+  // expenses: PropTypes.objectOf(PropTypes.object).isRequired,
+  allCurrencies: PropTypes.objectOf().isRequired,
 };
 
 const mapStateToProps = (state) => ({
   currencies: state.wallet.currencies,
   expenses: state.wallet.expenses,
+  allCurrencies: state.wallet.allCurrencies,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   currencyFetch: () => dispatch(fetchCurrency()),
-  expenseFetch: () => dispatch(fetchExpense()),
   saveWalletExpenses: (data) => dispatch(receiveExpenses(data)),
 });
 

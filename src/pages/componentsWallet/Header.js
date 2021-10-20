@@ -6,7 +6,15 @@ import './Header.css';
 
 class Header extends Component {
   render() {
-    const { email } = this.props;
+    const { email, expenses } = this.props;
+    console.log(expenses);
+    // const takeValor = expenses.filter((expense) => expense.value);
+    const totalExpense = expenses
+      .reduce((acc, currentValue) => {
+        const valueNumber = Number(currentValue.value);
+        const coinsAsk = Number(currentValue.exchangeRates[currentValue.currency].ask);
+        return acc + (valueNumber * coinsAsk);
+      }, 0);
     return (
       <header className="header-component">
         <img className="trybe-logo" src={ Logo } alt="logo-trybe" />
@@ -15,7 +23,7 @@ class Header extends Component {
             { email }
           </p>
           <p data-testid="total-field" className="total-expense">
-            0
+            { expenses.length > 0 ? totalExpense.toFixed(2) : '0.00' }
           </p>
           <p data-testid="header-currency-field" className="total-expense">
             BRL
@@ -28,11 +36,13 @@ class Header extends Component {
 
 Header.propTypes = {
   email: PropTypes.string.isRequired,
+  expenses: PropTypes.objectOf(PropTypes.object).isRequired,
 };
 
 function mapStateToProps(state) {
   return {
     email: state.user.email,
+    expenses: state.wallet.expenses,
   };
 }
 

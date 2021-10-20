@@ -24,20 +24,7 @@ export function fetchCurrency() {
     try {
       const response = await fetch('https://economia.awesomeapi.com.br/json/all');
       const data = await response.json();
-      const allCurencies = Object.keys(data);
-      return dispatch(receiveCurrency(allCurencies));
-    } catch (error) {
-      dispatch(failedRequest(error));
-    }
-  };
-}
-
-export function fetchExpense() {
-  return async (dispatch) => {
-    try {
-      const response = await fetch('https://economia.awesomeapi.com.br/json/all');
-      const data = await response.json();
-      return dispatch(receiveExpenses(data));
+      return dispatch(receiveCurrency(data));
     } catch (error) {
       dispatch(failedRequest(error));
     }
