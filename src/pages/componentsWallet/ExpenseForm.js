@@ -129,7 +129,6 @@ ExpenseForm.propTypes = {
   currencies: PropTypes.arrayOf().isRequired,
   currencyFetch: PropTypes.func.isRequired,
   saveWalletExpenses: PropTypes.func.isRequired,
-  // expenses: PropTypes.objectOf(PropTypes.object).isRequired,
   allCurrencies: PropTypes.objectOf().isRequired,
 };
 

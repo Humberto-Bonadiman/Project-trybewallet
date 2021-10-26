@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { saveLoginData } from '../actions';
 import Input from '../components/Input';
 import Button from '../components/Button';
+import './Login.css';
 
 // Esta parte eu peguei de uma thread do slack aberta pelo Michael Caxias
 // Fonte: https://trybecourse.slack.com/archives/C023YHXAEGM/p1634319081263300
@@ -42,30 +43,36 @@ class Login extends React.Component {
     const minPasswordCharacter = 6;
     const disabled = password.length >= minPasswordCharacter && isEmailValid(email);
     return (
-      <fieldset>
-        <Input
-          label="Email: "
-          type="text"
-          dataTestid="email-input"
-          onChange={ this.handleChange }
-          value={ email }
-          name="email"
-          required
-        />
-        <Input
-          label="Senha: "
-          type="password"
-          dataTestid="password-input"
-          onChange={ this.handleChange }
-          value={ password }
-          name="password"
-        />
-        <Button
-          type="button"
-          label="Entrar"
-          onClick={ this.onSubmitForm }
-          disabled={ !disabled }
-        />
+      <fieldset className="login-container">
+        <div className="login-box">
+          <h2>Tela de Login</h2>
+          <Input
+            label="Email: "
+            type="text"
+            className="input-text"
+            dataTestid="email-input"
+            onChange={ this.handleChange }
+            value={ email }
+            name="email"
+            required
+          />
+          <Input
+            label="Senha: "
+            type="password"
+            className="input-text"
+            dataTestid="password-input"
+            onChange={ this.handleChange }
+            value={ password }
+            name="password"
+          />
+          <Button
+            type="button"
+            className="input-button"
+            label="Entrar"
+            onClick={ this.onSubmitForm }
+            disabled={ !disabled }
+          />
+        </div>
       </fieldset>
     );
   }
