@@ -18,13 +18,13 @@
 
 .login-box {
   align-items: center;
-  background: #fff;
-  border: 2px solid #6C7A89;
+  background: white;
+  border: 2px solid #6c7a89;
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
   height: 300px;
+  justify-content: space-evenly;
   width: 300px;
 }
 
