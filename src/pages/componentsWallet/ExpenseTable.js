@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { removeExpenses as deleteExpense } from '../../actions/index';
 
 class ExpenseTable extends Component {
-/*   constructor() {
+  constructor() {
     super();
-  } */
+
+    this.buttonDelete = this.buttonDelete.bind(this);
+  }
+
+  // Nesta parte eu consultei o repositório do Rodolfo Braga
+  // Fonte: https://github.com/tryber/sd-014-b-project-trybewallet/pull/58/commits/181158095530fc1a2eff65c7e61e182f84db0593
+  buttonDelete(id) {
+    const { removeExpenses } = this.props;
+    removeExpenses(id);
+  }
 
   render() {
     const { expenses } = this.props;
     const currencyValue = expenses.map((id) => id.currency);
-    console.log(expenses);
-    console.log(currencyValue);
     return (
       <section className="table-component">
         <table>
@@ -40,12 +48,19 @@ class ExpenseTable extends Component {
                   {Number(number.exchangeRates[currencyValue[index]].ask).toFixed(2)}
                 </td>
                 <td>
-                  {Number(
-                    number.value * number.exchangeRates[currencyValue[index]].ask,
-                  ).toFixed(2)}
+                  {Number(number.value * number.exchangeRates[
+                    currencyValue[index]].ask).toFixed(2)}
                 </td>
                 <td>Real</td>
-                <td>Editar/Excluir</td>
+                <td>
+                  <button
+                    data-testid="delete-btn"
+                    onClick={ () => this.buttonDelete(number.id) }
+                    type="button"
+                  >
+                    Excluir
+                  </button>
+                </td>
               </tr>))}
           </tbody>
         </table>
@@ -56,7 +71,12 @@ class ExpenseTable extends Component {
 
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf().isRequired,
+  removeExpenses: PropTypes.func.isRequired,
 };
+
+const mapDispatchToProps = (dispatch) => ({
+  removeExpenses: (id) => dispatch(deleteExpense(id)),
+});
 
 function mapStateToProps(state) {
   return {
@@ -64,4 +84,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps)(ExpenseTable);
+export default connect(mapStateToProps, mapDispatchToProps)(ExpenseTable);

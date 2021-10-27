@@ -2,6 +2,7 @@ export const SAVE_LOGIN_DATA = 'SAVE_LOGIN_DATA';
 export const RECEIVE_EXPENSES = 'RECEIVE_EXPENSES';
 export const RECEIVE_CURRENCY = 'RECEIVE_CURRENCY';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
+export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
 
 export const saveLoginData = (payload) => ({
   type: SAVE_LOGIN_DATA, payload,
@@ -17,6 +18,10 @@ const receiveCurrency = (currency) => ({
 
 const failedRequest = (error) => ({
   type: FAILED_REQUEST, error,
+});
+
+export const removeExpenses = (payload) => ({
+  type: REMOVE_EXPENSES, payload,
 });
 
 export function fetchCurrency() {

@@ -7,8 +7,6 @@ import './Header.css';
 class Header extends Component {
   render() {
     const { email, expenses } = this.props;
-    console.log(expenses);
-    // const takeValor = expenses.filter((expense) => expense.value);
     const totalExpense = expenses
       .reduce((acc, currentValue) => {
         const valueNumber = Number(currentValue.value);

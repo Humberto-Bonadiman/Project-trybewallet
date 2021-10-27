@@ -10,7 +10,6 @@ class Wallet extends React.Component {
         <Header />
         <ExpenseForm />
         <ExpenseTable />
-        <h1>TrybeWallet</h1>
       </>
     );
   }

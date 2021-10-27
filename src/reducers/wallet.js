@@ -3,6 +3,7 @@ import {
   RECEIVE_EXPENSES,
   RECEIVE_CURRENCY,
   FAILED_REQUEST,
+  REMOVE_EXPENSES,
 } from '../actions/index';
 
 const initialState = {
@@ -27,6 +28,11 @@ const wallet = (state = initialState, action) => {
     };
   case FAILED_REQUEST:
     return { ...state, error: action.payload };
+  case REMOVE_EXPENSES:
+    return {
+      ...state,
+      expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)],
+    };
   default:
     return state;
   }
