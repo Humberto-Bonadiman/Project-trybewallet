@@ -92,6 +92,7 @@ class ExpenseForm extends Component {
 
   render() {
     const { value, description } = this.state;
+    const { editing, updateExpenses } = this.props;
     return (
       <form className="expenseForm">
         <label htmlFor="value">
@@ -115,11 +116,15 @@ class ExpenseForm extends Component {
           />
         </label>
         { this.handleSelect() }
-        <Button
+        { editing ? <Button
+          onClick={ updateExpenses }
+          disabled={ false }
+          label="Editar despesa"
+        /> : <Button
           onClick={ this.onClickSubmit }
           disabled={ false }
           label="Adicionar despesa"
-        />
+        /> }
       </form>
     );
   }
@@ -130,6 +135,12 @@ ExpenseForm.propTypes = {
   currencyFetch: PropTypes.func.isRequired,
   saveWalletExpenses: PropTypes.func.isRequired,
   allCurrencies: PropTypes.objectOf().isRequired,
+  editing: PropTypes.bool,
+  updateExpenses: PropTypes.func.isRequired,
+};
+
+ExpenseForm.defaultProps = {
+  editing: false,
 };
 
 const mapStateToProps = (state) => ({

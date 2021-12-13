@@ -2,12 +2,16 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { removeExpenses as deleteExpense } from '../../actions/index';
+import './ExpenseTable.css';
+import trashButton from '../images/trash-btn.png';
+import penEdit from '../images/lapis-edit.png';
 
 class ExpenseTable extends Component {
   constructor() {
     super();
 
     this.buttonDelete = this.buttonDelete.bind(this);
+    this.renderButton = this.renderButton.bind(this);
   }
 
   // Nesta parte eu consultei o repositório do Rodolfo Braga
@@ -17,9 +21,49 @@ class ExpenseTable extends Component {
     removeExpenses(id);
   }
 
-  render() {
+  renderButton() {
     const { expenses } = this.props;
     const currencyValue = expenses.map((id) => id.currency);
+    return (
+      <tbody>
+        {expenses.map((number, index) => (
+          <tr key={ number.id }>
+            <td>{number.description}</td>
+            <td>{number.tag}</td>
+            <td>{number.method}</td>
+            <td>{number.value}</td>
+            <td>{number.exchangeRates[currencyValue[index]].name.split('/')[0]}</td>
+            <td>
+              {Number(number.exchangeRates[currencyValue[index]].ask).toFixed(2)}
+            </td>
+            <td>
+              {Number(number.value * number.exchangeRates[
+                currencyValue[index]].ask).toFixed(2)}
+            </td>
+            <td>Real</td>
+            <td>
+              <button
+                data-testid="delete-btn"
+                onClick={ () => this.buttonDelete(number.id) }
+                type="button"
+                className="btn-table"
+              >
+                <img src={ trashButton } alt="Botão para excluir" className="img-btn" />
+              </button>
+              <button
+                data-testid="edit-btn"
+                onClick={ () => this.buttonDelete(number.id) }
+                type="button"
+                className="btn-table"
+              >
+                <img src={ penEdit } alt="Botão para editar" className="img-btn" />
+              </button>
+            </td>
+          </tr>))}
+      </tbody>);
+  }
+
+  render() {
     return (
       <section className="table-component">
         <table>
@@ -36,33 +80,7 @@ class ExpenseTable extends Component {
               <th>Editar/Excluir</th>
             </tr>
           </thead>
-          <tbody>
-            {expenses.map((number, index) => (
-              <tr key={ number.id }>
-                <td>{number.description}</td>
-                <td>{number.tag}</td>
-                <td>{number.method}</td>
-                <td>{number.value}</td>
-                <td>{number.exchangeRates[currencyValue[index]].name.split('/')[0]}</td>
-                <td>
-                  {Number(number.exchangeRates[currencyValue[index]].ask).toFixed(2)}
-                </td>
-                <td>
-                  {Number(number.value * number.exchangeRates[
-                    currencyValue[index]].ask).toFixed(2)}
-                </td>
-                <td>Real</td>
-                <td>
-                  <button
-                    data-testid="delete-btn"
-                    onClick={ () => this.buttonDelete(number.id) }
-                    type="button"
-                  >
-                    Excluir
-                  </button>
-                </td>
-              </tr>))}
-          </tbody>
+          { this.renderButton() }
         </table>
       </section>
     );

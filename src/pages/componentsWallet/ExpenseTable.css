@@ -1,0 +1,41 @@
+table, td, th {
+  border: 1px black;
+  border-collapse: collapse;
+  border-style: solid none;
+  padding: 5px;
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: rgb(61, 57, 57);
+  color: rgb(223, 226, 223);
+}
+
+tbody > tr:nth-child(even) {
+  background-color: #e2dfdf;
+}
+
+.btn-table {
+  background-color: aqua;
+  border-radius: 8px;
+  margin-right: 20px;
+  width: 40px;
+}
+
+.img-btn {
+  width: 30px;
+}
+
+tbody > tr:nth-child(even) > td > .btn-table {
+  background-color: yellow;
+}
+
+.img-btn:hover, .btn-table:hover {
+  cursor: pointer;
+}

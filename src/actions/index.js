@@ -3,6 +3,8 @@ export const RECEIVE_EXPENSES = 'RECEIVE_EXPENSES';
 export const RECEIVE_CURRENCY = 'RECEIVE_CURRENCY';
 export const FAILED_REQUEST = 'FAILED_REQUEST';
 export const REMOVE_EXPENSES = 'REMOVE_EXPENSES';
+export const EDIT_EXPENSES = 'EDIT_EXPENSES';
+export const UPDATE_EXPENSES = 'UPDATE_EXPENSES';
 
 export const saveLoginData = (payload) => ({
   type: SAVE_LOGIN_DATA, payload,
@@ -22,6 +24,14 @@ const failedRequest = (error) => ({
 
 export const removeExpenses = (payload) => ({
   type: REMOVE_EXPENSES, payload,
+});
+
+export const editExpenses = (payload) => ({
+  type: EDIT_EXPENSES, payload,
+});
+
+export const updateExpenses = (payload) => ({
+  type: UPDATE_EXPENSES, payload,
 });
 
 export function fetchCurrency() {

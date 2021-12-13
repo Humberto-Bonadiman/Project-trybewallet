@@ -4,6 +4,8 @@ import {
   RECEIVE_CURRENCY,
   FAILED_REQUEST,
   REMOVE_EXPENSES,
+  EDIT_EXPENSES,
+  UPDATE_EXPENSES,
 } from '../actions/index';
 
 const initialState = {
@@ -11,6 +13,8 @@ const initialState = {
   expenses: [],
   allCurrencies: {},
   error: '',
+  editing: false,
+  idToBeEdited: {},
 };
 
 const wallet = (state = initialState, action) => {
@@ -32,6 +36,23 @@ const wallet = (state = initialState, action) => {
     return {
       ...state,
       expenses: [...state.expenses.filter((expense) => expense.id !== action.payload)],
+    };
+  case EDIT_EXPENSES:
+    return {
+      ...state,
+      editing: true,
+      idToBeEdited: state.expenses.find((expense) => expense.id === action.payload),
+    };
+  case UPDATE_EXPENSES:
+    return {
+      ...state,
+      editing: false,
+      expenses: state.expenses.map((expense) => {
+        if (expense.id === action.payload.id) {
+          return action.payload;
+        }
+        return expense;
+      }),
     };
   default:
     return state;
