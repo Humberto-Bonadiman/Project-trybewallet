@@ -33,3 +33,24 @@
 .total-expense {
   margin-right: 5px;
 }
+
+@media screen and (max-width: 500px) {
+  .header-component {
+    flex-flow: column;
+    align-items: center;
+  }
+
+  .article-component {
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .trybe-logo {
+    margin: 0;
+  }
+
+  .email-header {
+    margin: 10px 0;
+  }
+}

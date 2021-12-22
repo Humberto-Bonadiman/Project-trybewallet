@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { removeExpenses as deleteExpense } from '../../actions/index';
+import { VscEdit, VscTrash } from 'react-icons/vsc';
+import {
+  removeExpenses as deleteExpense,
+  editExpenses,
+} from '../../actions/index';
 import './ExpenseTable.css';
-import trashButton from '../images/trash-btn.png';
-import penEdit from '../images/lapis-edit.png';
 
 class ExpenseTable extends Component {
   constructor() {
@@ -19,6 +21,20 @@ class ExpenseTable extends Component {
   buttonDelete(id) {
     const { removeExpenses } = this.props;
     removeExpenses(id);
+  }
+
+  editExpense(id) {
+    const { editExpense } = this.props;
+    return (
+      <button
+        data-testid="edit-btn"
+        onClick={ () => editExpense(id) }
+        type="button"
+        className="btn-edit-table btn"
+      >
+        <VscEdit className="btn-image" />
+      </button>
+    );
   }
 
   renderButton() {
@@ -42,21 +58,14 @@ class ExpenseTable extends Component {
             </td>
             <td>Real</td>
             <td>
+              { this.editExpense(number.id) }
               <button
                 data-testid="delete-btn"
                 onClick={ () => this.buttonDelete(number.id) }
                 type="button"
-                className="btn-table"
+                className="btn-table btn"
               >
-                <img src={ trashButton } alt="Botão para excluir" className="img-btn" />
-              </button>
-              <button
-                data-testid="edit-btn"
-                onClick={ () => this.buttonDelete(number.id) }
-                type="button"
-                className="btn-table"
-              >
-                <img src={ penEdit } alt="Botão para editar" className="img-btn" />
+                <VscTrash className="btn-image" />
               </button>
             </td>
           </tr>))}
@@ -66,7 +75,7 @@ class ExpenseTable extends Component {
   render() {
     return (
       <section className="table-component">
-        <table>
+        <table className="table-expense">
           <thead>
             <tr>
               <th>Descrição</th>
@@ -90,9 +99,11 @@ class ExpenseTable extends Component {
 ExpenseTable.propTypes = {
   expenses: PropTypes.arrayOf().isRequired,
   removeExpenses: PropTypes.func.isRequired,
+  editExpense: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
+  editExpense: (id) => dispatch(editExpenses(id)),
   removeExpenses: (id) => dispatch(deleteExpense(id)),
 });
 

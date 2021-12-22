@@ -14,7 +14,7 @@ const initialState = {
   allCurrencies: {},
   error: '',
   editing: false,
-  idToBeEdited: {},
+  editExpense: {},
 };
 
 const wallet = (state = initialState, action) => {
@@ -41,15 +41,19 @@ const wallet = (state = initialState, action) => {
     return {
       ...state,
       editing: true,
-      idToBeEdited: state.expenses.find((expense) => expense.id === action.payload),
+      editExpense: state.expenses.find((expense) => expense.id === action.payload),
     };
   case UPDATE_EXPENSES:
     return {
       ...state,
       editing: false,
       expenses: state.expenses.map((expense) => {
-        if (expense.id === action.payload.id) {
-          return action.payload;
+        if (expense.id === state.editExpense.id) {
+          return {
+            ...action.payload,
+            exchangeRates: expense.exchangeRates,
+            id: expense.id,
+          };
         }
         return expense;
       }),
