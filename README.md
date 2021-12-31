@@ -79,10 +79,6 @@ Crie uma página para que a pessoa usuária se identifique, com email e senha. E
 
 Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que traga a despesa total em uma moeda só. Esta página deve ser renderizada por um componente chamado ***Wallet***.
 
----
-
-### Configurando sua página
-
 #### 4. Crie uma página para sua carteira com as seguintes características:
 
   * A rota para esta página deve ser `/carteira`
@@ -125,8 +121,7 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
     </label>
   </form>
   ```
----
-
+  
 #### 6. Desenvolva um formulário para adicionar uma despesa contendo as seguintes características:
 
   * Um campo para adicionar valor da despesa.
@@ -157,8 +152,6 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
     * O campo deverá ter a label `Tag`.
 
----
-
 #### 7. Implemente a lógica para preencher as opções do campo "Moedas", buscando as siglas das moedas da API:
 
   * Ao entrar na página `/carteira`, você deverá fazer uma requisição para a API das moedas e preencher as opções do `<select>` de "Moedas" com os valores retornados. Utilizando as siglas das moedas.
@@ -168,8 +161,6 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
     * Esses valores devem vir da API através do endpoint: https://economia.awesomeapi.com.br/json/all.
 
     * Remova das informações trazidas pela API a opção 'USDT' (Dólar Turismo).
-    
-----
 
 #### 8. Desenvolva a opção de "Adicionar despesa" na sua tabela de gastos
 
@@ -310,8 +301,6 @@ Crie uma página para gerenciar a carteira de gastos em diversas moedas, e que t
 
     * Utilize sempre o formato `0.00` (número - ponto - duas casas decimais)
     
----
-
 #### 10. Crie um botão para deletar uma despesa da tabela contendo as seguintes características:
 
   * O botão deve estar na linha da tabela e deve possuir `data-testid="delete-btn"`.
