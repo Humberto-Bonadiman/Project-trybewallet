@@ -1,10 +1,10 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5ae8a36e4ca8edc6c9bfa757a23d6cb6",
+    "revision": "a3e4b8792ef320c96e399e0a58b89f96",
     "url": "/Project-trybewallet/index.html"
   },
   {
-    "revision": "e19dc7b5f7b77ec6c585",
+    "revision": "c1bdda09c19ce20d0afa",
     "url": "/Project-trybewallet/static/css/main.70144e4e.chunk.css"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Project-trybewallet/static/js/2.e69ef35f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "e19dc7b5f7b77ec6c585",
-    "url": "/Project-trybewallet/static/js/main.10ed9ed6.chunk.js"
+    "revision": "c1bdda09c19ce20d0afa",
+    "url": "/Project-trybewallet/static/js/main.67237cb2.chunk.js"
   },
   {
     "revision": "e65a59b90d7f958b96c9",
